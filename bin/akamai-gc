@@ -1,0 +1,53 @@
+#!/usr/bin/python
+
+import os
+import sys
+import requests
+import json
+
+import config.default_config as default_cfg
+import time
+
+## EASY ENV READER
+gc_url = os.environ.get('GC_URL') or None
+gc_token = os.environ.get('GC_TOKEN') or None
+if not gc_url or not gc_token:
+    print("No URL or TOKEN ENV VAR FOUND - exiting")
+    sys.exit(1)
+
+
+now = int(time.time())
+end_point = int((now - int(default_cfg.log_delay)) * 1000)
+start_point = int((now - int(default_cfg.log_delay) - default_cfg.loop_time) * 1000 )
+
+print( f"Now: {now}, start: {start_point}, end: {end_point}")
+
+print("https://" + gc_url + "/api/v3.0/visibility/graph")
+
+payload = {'token': gc_token,
+           'from_time': start_point,
+           'to_time': end_point,
+           'sort': '-slot_start_time'
+           }
+
+#payload = {'token': gc_token,
+#           'start_time': start_point,
+#           'end_time': end_point,
+#           'saved_map_id': '96a7ecb2-0309-4110-a068-7f7510991f48'
+#           }
+
+#1661119200000
+#16611659960000
+#1661167025306
+#1661166953820463
+#16611669936537
+
+
+#https://lab22-a.selab.guardicore.com/api/v3.0/connections?sort=-slot_start_time&from_time=1661119200000&to_time=1661205599999&limit=20&offset=0
+
+result = requests.get(url="https://" + gc_url + "/api/v3.0/connections",
+             params=payload
+             )
+#print(result.json())
+#print(json.dumps(result.json()['objects'], indent=4, sort_keys=True))
+print(result.json()['objects'])
