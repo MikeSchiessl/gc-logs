@@ -17,8 +17,8 @@ if not gc_url or not gc_token:
 
 
 now = int(time.time())
-end_point = int((now - int(default_cfg.log_delay)) * 1000)
-start_point = int((now - int(default_cfg.log_delay) - default_cfg.loop_time) * 1000 )
+end_point = int(now - int(default_cfg.log_delay))
+start_point = int(now - int(default_cfg.log_delay) - default_cfg.loop_time)
 
 print( f"Now: {now}, start: {start_point}, end: {end_point}")
 
@@ -45,9 +45,24 @@ payload = {'token': gc_token,
 
 #https://lab22-a.selab.guardicore.com/api/v3.0/connections?sort=-slot_start_time&from_time=1661119200000&to_time=1661205599999&limit=20&offset=0
 
-result = requests.get(url="https://" + gc_url + "/api/v3.0/connections",
-             params=payload
-             )
-#print(result.json())
+while True:
+    payload = {'token': gc_token,
+               'from_time': start_point * 1000,
+               'to_time': end_point * 1000,
+               'sort': '-slot_start_time'
+               }
+
+    result = requests.get(url="https://" + gc_url + "/api/v3.0/connections",
+                 params=payload
+                 )
+    for line in result.json()['objects']:
+        print(line)
+
+    #### WAIT !!
+    time.sleep(default_cfg.loop_time)
+    start_point = start_point + default_cfg.loop_time
+    end_point = end_point + default_cfg.loop_time
+
+
 #print(json.dumps(result.json()['objects'], indent=4, sort_keys=True))
 print(result.json()['objects'])
