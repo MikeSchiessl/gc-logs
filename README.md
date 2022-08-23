@@ -16,3 +16,7 @@ gc_hostname = your_host_name.guardicore.com
 gc_username = your_api_username
 gc_password = your_api_password
 ```
+
+
+# 2DOS
+- add auto - auth renewal if failed
