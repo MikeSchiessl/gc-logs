@@ -7,7 +7,7 @@ import config.version as gc_version
 import modules.argsParser as args
 import modules.generic as generic
 import modules.aka_log as aka_log
-import modules.events as events
+import modules.events as gc_events
 
 my_args = args.init()
 
@@ -23,7 +23,8 @@ edgerc_data = generic.edgerc_reader(configfile=my_args.credentials_file,
                       configsection=my_args.credentials_file_section,
                       configvalues=["gc_username","gc_password","gc_hostname"])
 
-#if my_args.netlog:
-#    .netlog()
+#gc_authtoken = generic.gc_get_auth_token(gc_edgerc=edgerc_data))
 
-print(generic.gc_get_auth_token(gc_username=edgerc_data['gc_username'], gc_password=edgerc_data['gc_password'], gc_hostname=edgerc_data['gc_hostname']))
+# Read Netlog
+if my_args.netlog:
+    gc_events.netlog(starttime=my_args.event_starttime, endtime=my_args.event_endtime, follow_mode=my_args.event_follow, gc_edgerc=edgerc_data)

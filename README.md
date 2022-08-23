@@ -1,6 +1,10 @@
 # gc-logs
 Provide GC logs to ULS
 
+## Usage
+```bash
+akamai-gc --help
+```
 
 ## Authentication
 To use guardicore CLI, a proper authentication needs to be provided.

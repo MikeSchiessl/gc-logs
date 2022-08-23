@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 
 import argparse
 import os
@@ -44,35 +45,39 @@ def init():
                              help="Credentials file Section's name to use ('default' if not specified).")
 
     # Commands
-    commands = parser.add_subparsers(title="Commands", help="Main commands")
+    subparsers = parser.add_subparsers(help='sub-command help')
 
     ## EVENTS
-    events_parser = commands.add_parser(name="events", aliases="e", help=(f"Show {version.__tool_name_long__} events"))
+    parser_events = subparsers.add_parser(name="events", aliases="e", help=(f"Show {version.__tool_name_long__} events"))
 
     ### NETLOG
-    events_parser.add_argument("netlog",
+    parser_events.add_argument("netlog",
                                action='store',
                                type=bool,
                                default=False,
+                               nargs='?',
+                               const=True,
                                help="Show Network Log Events")
 
-    events_parser.add_argument('--starttime',
+    parser_events.add_argument('--starttime',
                                action='store',
                                dest='event_starttime',
-                               default=time.time() - default_config.log_delay - default_config.loop_time,
+                               default=int(time.time()) - default_config.log_delay - default_config.loop_time,
                                help="Fetch events from $starttime (UNIX TIMESTAMP)")
 
-    events_parser.add_argument('--endtime',
+    parser_events.add_argument('--endtime',
                                action='store',
                                dest='event_endtime',
-                               default=time.time() - default_config.log_delay - default_config.loop_time,
+                               default=int(time.time()) - default_config.log_delay,
                                help="Stop event collection at $endtime (UNIX TIMESTAMP)")
 
-    events_parser.add_argument('-f, --follow',
+    parser_events.add_argument('-f, --follow',
                                action='store',
                                dest='event_follow',
                                type=bool,
+                               nargs='?',
                                default=False,
+                               const=True,
                                help="Continuously follow (tail -f) the log")
 
     #print(parser.parse_args())

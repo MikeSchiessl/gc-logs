@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 import requests
 import os
 import sys
@@ -13,6 +15,7 @@ def version():
     """
     print(gc_version.__version__)
     sys.exit(0)
+
 
 def edgerc_reader(configfile, configsection, configvalues):
     """
@@ -49,7 +52,7 @@ def edgerc_reader(configfile, configsection, configvalues):
 
 
 
-def _api_request(method="GET", scheme="https://", url=None, path=None, params={}, payload={}, headers={}, content_type='application/json', expected_status_list=[200]):
+def api_request(method="GET", scheme="https://", url=None, path=None, params={}, payload={}, headers={}, content_type='application/json', expected_status_list=[200]):
     """
     Generic API Request handler including debugging handlers
     :param self:
@@ -67,7 +70,7 @@ def _api_request(method="GET", scheme="https://", url=None, path=None, params={}
     try:
         my_url = scheme + url + path
         headers['content_type'] = content_type
-        aka_log.log.debug( f"Sending Request (URL, method, params, payload, headers, expected status): {my_url}, {method}, {params}, {payload}, {headers}, {expected_status_list} ")
+        aka_log.log.debug( f"Sending Request (URL: {my_url}, Method: {method}, Params: {params}, Payload: {payload}, Headers: {headers}, expected status: {expected_status_list} ")
         my_request = requests.request(method=method.upper(), url=my_url, params=params, headers=headers,
                                       json=payload)
         # my_request = urequests.request(method=method, url=my_url, headers=my_headers, json=payload)
@@ -81,17 +84,17 @@ def _api_request(method="GET", scheme="https://", url=None, path=None, params={}
         aka_log.log.critical(f"Critical request error: {error}")
 
 
-def gc_get_auth_token(gc_username=None, gc_password=None, gc_hostname=None):
+def gc_get_auth_token(gc_edgerc=None):
     """
     Returns the Guardicore auth token for later use
-    :param gc_username: 
-    :param gc_password: 
-    :param gc_hostname: 
+    :param gc_edgerc:
     :return: {'access_token': 'token'}
     """
-    my_return = _api_request(method="POST", url=gc_hostname, path='/api/v3.0/authenticate', payload={"username": gc_username, "password": gc_password})
+    my_payload = {'username': gc_edgerc['gc_username'], 'password': gc_edgerc['gc_password']}
+
+    my_return = api_request(method="POST", url=gc_edgerc['gc_hostname'], path='/api/v3.0/authenticate', payload=my_payload)
     if not my_return or not 'access_token' in my_return:
-        aka_log.log.critical( f"Not able to retreive an authentication token, exiting")
+        aka_log.log.critical(f"Not able to retreive an authentication token, exiting")
         sys.exit(1)
     else:
         return my_return
