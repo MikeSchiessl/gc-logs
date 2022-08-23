@@ -1,19 +1,21 @@
 #!/usr/bin/env python3
+import sys
 import time
 
 import modules.aka_log as aka_log
 import modules.generic as generic
 import config.default_config as default_config
-
+import json
 
 def netlog(given_args=None, gc_edgerc=None):
     starttime = given_args.event_starttime
     endtime = given_args.event_endtime
     follow_mode = given_args.event_follow
+    print(f"follow; {follow_mode}")
     user_agent = given_args.gc_user_agent_prefix
     gc_authtoken = None
 
-
+   # sys.exit()
 
     while True:
         aka_log.log.debug(f"Netlog starttime: {starttime}, Endtime: {endtime}, follow mode: {follow_mode}")
@@ -38,7 +40,7 @@ def netlog(given_args=None, gc_edgerc=None):
             my_result = generic.api_request(method="GET", scheme="https://", url=gc_edgerc['gc_hostname'], path='/api/v3.0/connections', params=my_params, headers=my_headers, payload=None, user_agent=user_agent)
 
             for line in my_result['objects']:
-                print(line)
+                print(json.dumps(line))
 
             if my_result['to'] >= my_result['total_count']:
                 walk_pages = False
