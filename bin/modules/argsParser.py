@@ -68,13 +68,13 @@ def init():
                                const=True,
                                help="Show Network Log Events")
 
-    parser_events.add_argument('--starttime',
+    parser_events.add_argument('--start',
                                action='store',
                                dest='event_starttime',
                                default=int(time.time()) - default_config.log_delay - default_config.loop_time,
                                help="Fetch events from $starttime (UNIX TIMESTAMP)")
 
-    parser_events.add_argument('--endtime',
+    parser_events.add_argument('--end',
                                action='store',
                                dest='event_endtime',
                                default=int(time.time()) - default_config.log_delay,
