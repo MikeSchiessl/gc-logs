@@ -1,0 +1,83 @@
+
+import argparse
+import os
+import time
+import config.version as version
+import config.default_config as default_config
+
+def init():
+    # Argument Parsing
+    parser = argparse.ArgumentParser(description=f"{version.__tool_name_long__}",
+                                     formatter_class=argparse.RawTextHelpFormatter)
+
+    # Version Information
+    parser.add_argument('-v', '--version',
+                        action='store',
+                        type=bool,
+                        default=False,
+                        nargs='?',
+                        const=True,
+                        help=f'Display {version.__tool_name_short__} version and operational information')
+
+    # Loglevel
+    parser.add_argument('-l', '--loglevel',
+                        action='store',
+                        type=str.upper,
+                        default=(os.environ.get('GC_LOGLEVEL') or default_config.default_log_level),
+                        choices=default_config.log_levels_available,
+                        help=f'Adjust the loglevel Default: {default_config.default_log_level}')
+
+    # EDGERC
+    parser.add_argument('--edgerc',
+                             action='store',
+                             type=str,
+                             dest="credentials_file",
+                             default=(os.environ.get('GC_EDGERC') or '~/.edgerc'),
+                             help="Location of the credentials file (default is ~/.edgerc)")
+
+    # EDGERC-SECTION
+    parser.add_argument('--section',
+                             action='store',
+                             type=str,
+                             dest="credentials_file_section",
+                             default=(os.environ.get('ULS_SECTION') or 'default'),
+                             help="Credentials file Section's name to use ('default' if not specified).")
+
+    # Commands
+    commands = parser.add_subparsers(title="Commands", help="Main commands")
+
+    ## EVENTS
+    events_parser = commands.add_parser(name="events", aliases="e", help=(f"Show {version.__tool_name_long__} events"))
+
+    ### NETLOG
+    events_parser.add_argument("netlog",
+                               action='store',
+                               type=bool,
+                               default=False,
+                               help="Show Network Log Events")
+
+    events_parser.add_argument('--starttime',
+                               action='store',
+                               dest='event_starttime',
+                               default=time.time() - default_config.log_delay - default_config.loop_time,
+                               help="Fetch events from $starttime (UNIX TIMESTAMP)")
+
+    events_parser.add_argument('--endtime',
+                               action='store',
+                               dest='event_endtime',
+                               default=time.time() - default_config.log_delay - default_config.loop_time,
+                               help="Stop event collection at $endtime (UNIX TIMESTAMP)")
+
+    events_parser.add_argument('-f, --follow',
+                               action='store',
+                               dest='event_follow',
+                               type=bool,
+                               default=False,
+                               help="Continuously follow (tail -f) the log")
+
+    #print(parser.parse_args())
+    return parser.parse_args()
+
+
+
+# EOF

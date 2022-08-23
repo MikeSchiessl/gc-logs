@@ -1,68 +1,29 @@
-#!/usr/bin/python
+#!/usr/bin/env python3
 
-import os
-import sys
-import requests
-import json
+## Based on https://guardicore.zendesk.com/hc/en-us/articles/360015818659-HOWTO-Network-Logs-API-Endpoint-Guide
 
 import config.default_config as default_cfg
-import time
+import config.version as gc_version
+import modules.argsParser as args
+import modules.generic as generic
+import modules.aka_log as aka_log
+import modules.events as events
 
-## EASY ENV READER
-gc_url = os.environ.get('GC_URL') or None
-gc_token = os.environ.get('GC_TOKEN') or None
-if not gc_url or not gc_token:
-    print("No URL or TOKEN ENV VAR FOUND - exiting")
-    sys.exit(1)
+my_args = args.init()
 
+if my_args.version:
+    generic.version()
 
-now = int(time.time())
-end_point = int(now - int(default_cfg.log_delay))
-start_point = int(now - int(default_cfg.log_delay) - default_cfg.loop_time)
-
-print( f"Now: {now}, start: {start_point}, end: {end_point}")
-
-print("https://" + gc_url + "/api/v3.0/visibility/graph")
-
-payload = {'token': gc_token,
-           'from_time': start_point,
-           'to_time': end_point,
-           'sort': '-slot_start_time'
-           }
-
-#payload = {'token': gc_token,
-#           'start_time': start_point,
-#           'end_time': end_point,
-#           'saved_map_id': '96a7ecb2-0309-4110-a068-7f7510991f48'
-#           }
-
-#1661119200000
-#16611659960000
-#1661167025306
-#1661166953820463
-#16611669936537
+# Load the LOG system
+aka_log.init(my_args.loglevel, gc_version.__tool_name_short__)
 
 
-#https://lab22-a.selab.guardicore.com/api/v3.0/connections?sort=-slot_start_time&from_time=1661119200000&to_time=1661205599999&limit=20&offset=0
+# Pre Flight checks
+edgerc_data = generic.edgerc_reader(configfile=my_args.credentials_file,
+                      configsection=my_args.credentials_file_section,
+                      configvalues=["gc_username","gc_password","gc_hostname"])
 
-while True:
-    payload = {'token': gc_token,
-               'from_time': start_point * 1000,
-               'to_time': end_point * 1000,
-               'sort': '-slot_start_time'
-               }
+#if my_args.netlog:
+#    .netlog()
 
-    result = requests.get(url="https://" + gc_url + "/api/v3.0/connections",
-                 params=payload
-                 )
-    for line in result.json()['objects']:
-        print(line)
-
-    #### WAIT !!
-    time.sleep(default_cfg.loop_time)
-    start_point = start_point + default_cfg.loop_time
-    end_point = end_point + default_cfg.loop_time
-
-
-#print(json.dumps(result.json()['objects'], indent=4, sort_keys=True))
-print(result.json()['objects'])
+print(generic.gc_get_auth_token(gc_username=edgerc_data['gc_username'], gc_password=edgerc_data['gc_password'], gc_hostname=edgerc_data['gc_hostname']))
