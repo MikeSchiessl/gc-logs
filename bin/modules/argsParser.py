@@ -12,7 +12,7 @@ def init():
                                      formatter_class=argparse.RawTextHelpFormatter)
 
     # Version Information
-    parser.add_argument('-v', '--version',
+    parser.add_argument('-v','--version',
                         action='store',
                         type=bool,
                         default=False,
@@ -43,6 +43,15 @@ def init():
                              dest="credentials_file_section",
                              default=(os.environ.get('ULS_SECTION') or 'default'),
                              help="Credentials file Section's name to use ('default' if not specified).")
+
+    # USER AGENT
+    parser.add_argument('--user-agent-prefix',
+                        action='store',
+                        type=str,
+                        dest='gc_user_agent_prefix',
+                        default=f"GC-CLI {version.__version__}",
+                        help="Change the User Agent when making requests"
+                        )
 
     # Commands
     subparsers = parser.add_subparsers(help='sub-command help')

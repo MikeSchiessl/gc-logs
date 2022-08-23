@@ -6,7 +6,11 @@ import modules.generic as generic
 import config.default_config as default_config
 
 
-def netlog(starttime=None, endtime=None, follow_mode=False, gc_edgerc=None):
+def netlog(given_args=None, gc_edgerc=None):
+    starttime = given_args.event_starttime
+    endtime = given_args.event_endtime
+    follow_mode = given_args.event_follow
+    user_agent = given_args.gc_user_agent_prefix
     gc_authtoken = None
 
 
@@ -31,7 +35,7 @@ def netlog(starttime=None, endtime=None, follow_mode=False, gc_edgerc=None):
             }
 
 
-            my_result = generic.api_request(method="GET", scheme="https://", url=gc_edgerc['gc_hostname'], path='/api/v3.0/connections', params=my_params, headers=my_headers, payload=None)
+            my_result = generic.api_request(method="GET", scheme="https://", url=gc_edgerc['gc_hostname'], path='/api/v3.0/connections', params=my_params, headers=my_headers, payload=None, user_agent=user_agent)
 
             for line in my_result['objects']:
                 print(line)

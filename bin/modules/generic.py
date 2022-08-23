@@ -5,6 +5,7 @@ import os
 import sys
 import configparser
 import config.version as gc_version
+import config.default_config as default_config
 import modules.aka_log as aka_log
 
 
@@ -52,7 +53,7 @@ def edgerc_reader(configfile, configsection, configvalues):
 
 
 
-def api_request(method="GET", scheme="https://", url=None, path=None, params={}, payload={}, headers={}, content_type='application/json', expected_status_list=[200]):
+def api_request(method="GET", scheme="https://", url=None, path=None, params={}, payload={}, headers={}, content_type='application/json', expected_status_list=[200], user_agent=None):
     """
     Generic API Request handler including debugging handlers
     :param self:
@@ -69,7 +70,8 @@ def api_request(method="GET", scheme="https://", url=None, path=None, params={},
     """
     try:
         my_url = scheme + url + path
-        headers['content_type'] = content_type
+        headers['Content-Type'] = content_type
+        headers['User-Agent'] = user_agent
         aka_log.log.debug( f"Sending Request (URL: {my_url}, Method: {method}, Params: {params}, Payload: {payload}, Headers: {headers}, expected status: {expected_status_list} ")
         my_request = requests.request(method=method.upper(), url=my_url, params=params, headers=headers,
                                       json=payload)
