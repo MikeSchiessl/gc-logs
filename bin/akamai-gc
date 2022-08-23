@@ -30,5 +30,8 @@ edgerc_data = generic.edgerc_reader(configfile=my_args.credentials_file,
 #gc_authtoken = generic.gc_get_auth_token(gc_edgerc=edgerc_data))
 
 # Read Netlog
-if my_args.netlog:
-    gc_events.netlog(given_args=my_args, gc_edgerc=edgerc_data)
+try:
+    if my_args.netlog:
+        gc_events.netlog(given_args=my_args, gc_edgerc=edgerc_data)
+except:
+    sys.exit()
