@@ -2,8 +2,11 @@
 Provide GC logs to ULS
 
 ## Usage
+
+### Network logs
+Setup the .edgerc file as described [here](#authentication)
 ```bash
-akamai-gc --help
+akamai-gc events netlog --follow
 ```
 
 ## Authentication

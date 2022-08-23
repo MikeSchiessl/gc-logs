@@ -78,9 +78,9 @@ def init():
                                action='store',
                                dest='event_endtime',
                                default=int(time.time()) - default_config.log_delay,
-                               help="Stop event collection at $endtime (UNIX TIMESTAMP)")
+                               help=''"Stop event collection at $endtime (UNIX TIMESTAMP)")
 
-    parser_events.add_argument('-f, --follow',
+    parser_events.add_argument('-f', '--follow',
                                action='store',
                                dest='event_follow',
                                type=bool,
