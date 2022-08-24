@@ -17,10 +17,12 @@ akamai-gc events incident --follow
 ## Authentication
 To use guardicore CLI, a proper authentication needs to be provided.
 Therefore please create an .edgerc file or extend an already existing akamai .edgerc file with the following contents.
-The default search location for the edgerc file is `~/.edgerc`.  
+The default search location for the edgerc file is `~/.edgerc`. 
+
+Please make sure you enter the hostname **without** any scheme (http:// or https://)
 ```bash
 [default]
-gc_hostname = your_host_name.guardicore.com
+gc_hostname = your_host_name.guardicore.com       # Do not prepend http(s)://
 gc_username = your_api_username
 gc_password = your_api_password
 ```
