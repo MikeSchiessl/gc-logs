@@ -27,17 +27,15 @@ edgerc_data = generic.edgerc_reader(configfile=my_args.credentials_file,
                       configsection=my_args.credentials_file_section,
                       configvalues=["gc_username","gc_password","gc_hostname"])
 
-#gc_authtoken = generic.gc_get_auth_token(gc_edgerc=edgerc_data))
-
-# Read Netlog
 try:
-    print(f"event_action: {my_args.event_action} - incidents: {my_args.event_action}")
-
-
     if my_args.event_action == "netlog":
         gc_events.netlog(given_args=my_args, gc_edgerc=edgerc_data)
     elif my_args.event_action == "incident":
         gc_events.incident(given_args=my_args, gc_edgerc=edgerc_data)
+    elif my_args.event_action == "agent":
+        gc_events.agent(given_args=my_args, gc_edgerc=edgerc_data)
+    elif my_args.event_action == "system":
+        gc_events.system(given_args=my_args, gc_edgerc=edgerc_data)
     else:
         print("Nothing to do.")
         sys.exit()

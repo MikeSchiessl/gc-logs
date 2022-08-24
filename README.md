@@ -14,6 +14,19 @@ Setup the .edgerc file as described [here](#authentication)
 ```bash
 akamai-gc events incident --follow
 ```
+
+### Agent Logs
+Setup the .edgerc file as described [here](#authentication)
+```bash
+akamai-gc events agent --follow
+```
+
+### System Logs
+Setup the .edgerc file as described [here](#authentication)
+```bash
+akamai-gc events system --follow
+```
+
 ## Authentication
 To use guardicore CLI, a proper authentication needs to be provided.
 Therefore please create an .edgerc file or extend an already existing akamai .edgerc file with the following contents.

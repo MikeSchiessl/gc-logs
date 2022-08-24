@@ -15,6 +15,9 @@ log_delay = 1200
 loop_time = 30
 ## Netlog events per page
 netlog_page_size = 10000
-
 ## Incident events per page
 incident_page_size= 1000
+## Agent Status events per page
+agent_page_size= 10000
+## System Status events per page
+system_page_size= 10000
