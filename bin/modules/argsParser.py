@@ -60,13 +60,11 @@ def init():
     parser_events = subparsers.add_parser(name="events", aliases="e", help=(f"Show {version.__tool_name_long__} events"))
 
     ### NETLOG
-    parser_events.add_argument("netlog",
+    parser_events.add_argument(dest="event_action",
+                                choices=['netlog','incident'],
                                action='store',
-                               type=bool,
-                               default=False,
-                               nargs='?',
-                               const=True,
-                               help="Show Network Log Events")
+                               help="Show Network Events")
+
 
     parser_events.add_argument('--start',
                                action='store',

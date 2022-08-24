@@ -31,7 +31,15 @@ edgerc_data = generic.edgerc_reader(configfile=my_args.credentials_file,
 
 # Read Netlog
 try:
-    if my_args.netlog:
+    print(f"event_action: {my_args.event_action} - incidents: {my_args.event_action}")
+
+
+    if my_args.event_action == "netlog":
         gc_events.netlog(given_args=my_args, gc_edgerc=edgerc_data)
+    elif my_args.event_action == "incident":
+        gc_events.incident(given_args=my_args, gc_edgerc=edgerc_data)
+    else:
+        print("Nothing to do.")
+        sys.exit()
 except:
     sys.exit()

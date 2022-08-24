@@ -13,5 +13,8 @@ max_auth_attempts = 3
 log_delay = 1200
 ## Loop time in seconds
 loop_time = 30
-## Events per PAge
-page_size = 10000
+## Netlog events per page
+netlog_page_size = 10000
+
+## Incident events per page
+incident_page_size= 1000
