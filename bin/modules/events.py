@@ -58,7 +58,6 @@ def incident(given_args=None, gc_edgerc=None):
     starttime = given_args.event_starttime
     endtime = given_args.event_endtime
     follow_mode = given_args.event_follow
-    print(f"follow; {follow_mode}")
     user_agent = given_args.gc_user_agent_prefix
     gc_authtoken = None
 
@@ -101,7 +100,6 @@ def agent(given_args=None, gc_edgerc=None):
     starttime = given_args.event_starttime
     endtime = given_args.event_endtime
     follow_mode = given_args.event_follow
-    print(f"follow; {follow_mode}")
     user_agent = given_args.gc_user_agent_prefix
     gc_authtoken = None
 
@@ -146,7 +144,6 @@ def system(given_args=None, gc_edgerc=None):
     starttime = given_args.event_starttime
     endtime = given_args.event_endtime
     follow_mode = given_args.event_follow
-    print(f"follow; {follow_mode}")
     user_agent = given_args.gc_user_agent_prefix
     gc_authtoken = None
 
