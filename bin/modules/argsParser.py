@@ -41,7 +41,7 @@ def init():
                              action='store',
                              type=str,
                              dest="credentials_file_section",
-                             default=(os.environ.get('ULS_SECTION') or 'default'),
+                             default=(os.environ.get('GC_SECTION') or 'default'),
                              help="Credentials file Section's name to use ('default' if not specified).")
 
     # USER AGENT
