@@ -8,8 +8,8 @@ import config.default_config as default_config
 import json
 
 def netlog(given_args=None, gc_edgerc=None):
-    starttime = given_args.event_starttime
-    endtime = given_args.event_endtime
+    starttime = given_args.event_starttime - default_config.netlog_log_delay - default_config.netlog_loop_time
+    endtime = given_args.event_endtime - default_config.netlog_log_delay
     follow_mode = given_args.event_follow
     user_agent = given_args.gc_user_agent_prefix
     gc_authtoken = None
@@ -48,15 +48,15 @@ def netlog(given_args=None, gc_edgerc=None):
 
         if follow_mode:
             starttime = endtime
-            endtime = endtime + default_config.loop_time
-            time.sleep(default_config.loop_time)
+            endtime = endtime + default_config.netlog_loop_time
+            time.sleep(default_config.netlog_loop_time)
         else:
             break
 
 
 def incident(given_args=None, gc_edgerc=None):
-    starttime = given_args.event_starttime
-    endtime = given_args.event_endtime
+    starttime = given_args.event_starttime - default_config.incident_log_delay - default_config.incident_loop_time
+    endtime = given_args.event_endtime - default_config.incident_log_delay
     follow_mode = given_args.event_follow
     user_agent = given_args.gc_user_agent_prefix
     gc_authtoken = None
@@ -90,15 +90,15 @@ def incident(given_args=None, gc_edgerc=None):
 
         if follow_mode:
             starttime = endtime
-            endtime = endtime + default_config.loop_time
-            time.sleep(default_config.loop_time)
+            endtime = endtime + default_config.incident_loop_time
+            time.sleep(default_config.incident_loop_time)
         else:
             break
 
 
 def agent(given_args=None, gc_edgerc=None):
-    starttime = given_args.event_starttime
-    endtime = given_args.event_endtime
+    starttime = given_args.event_starttime - default_config.agent_log_delay - default_config.agent_loop_time
+    endtime = given_args.event_endtime - default_config.agent_log_delay
     follow_mode = given_args.event_follow
     user_agent = given_args.gc_user_agent_prefix
     gc_authtoken = None
@@ -133,16 +133,16 @@ def agent(given_args=None, gc_edgerc=None):
 
         if follow_mode:
             starttime = endtime
-            endtime = endtime + default_config.loop_time
-            time.sleep(default_config.loop_time)
+            endtime = endtime + default_config.agent_loop_time
+            time.sleep(default_config.agent_loop_time)
         else:
             break
 
 
 
 def system(given_args=None, gc_edgerc=None):
-    starttime = given_args.event_starttime
-    endtime = given_args.event_endtime
+    starttime = given_args.event_starttime - default_config.system_log_delay - default_config.system_loop_time
+    endtime = given_args.event_endtime - default_config.system_log_delay
     follow_mode = given_args.event_follow
     user_agent = given_args.gc_user_agent_prefix
     gc_authtoken = None
@@ -176,7 +176,7 @@ def system(given_args=None, gc_edgerc=None):
 
         if follow_mode:
             starttime = endtime
-            endtime = endtime + default_config.loop_time
-            time.sleep(default_config.loop_time)
+            endtime = endtime + default_config.system_loop_time
+            time.sleep(default_config.system_loop_time)
         else:
             break

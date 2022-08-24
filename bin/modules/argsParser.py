@@ -69,13 +69,13 @@ def init():
     parser_events.add_argument('--start',
                                action='store',
                                dest='event_starttime',
-                               default=int(time.time()) - default_config.log_delay - default_config.loop_time,
+                               default=int(time.time()),
                                help="Fetch events from $starttime (UNIX TIMESTAMP)")
 
     parser_events.add_argument('--end',
                                action='store',
                                dest='event_endtime',
-                               default=int(time.time()) - default_config.log_delay,
+                               default=int(time.time()),
                                help=''"Stop event collection at $endtime (UNIX TIMESTAMP)")
 
     parser_events.add_argument('-f', '--follow',
