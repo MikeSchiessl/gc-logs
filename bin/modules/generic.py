@@ -81,7 +81,7 @@ def api_request(method="GET", scheme="https://", url=None, path=None, params={},
             return my_request.json()
         else:
             aka_log.log.critical(f"Request error (status, text):  {my_request.status_code} {my_request.text}")
-            # return False
+            return False
     except Exception as error:
         aka_log.log.critical(f"Critical request error: {error}")
 

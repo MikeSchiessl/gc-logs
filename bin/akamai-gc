@@ -2,6 +2,7 @@
 
 ## Based on https://guardicore.zendesk.com/hc/en-us/articles/360015818659-HOWTO-Network-Logs-API-Endpoint-Guide
 import sys
+import threading, signal
 
 import config.default_config as default_cfg
 import config.version as gc_version
@@ -10,34 +11,72 @@ import modules.generic as generic
 import modules.aka_log as aka_log
 import modules.events as gc_events
 
-my_args = args.init()
+
+stopEvent = threading.Event()
+
+
+def sigterm_handler(signum, frame):
+    """
+    Upon SIGTERM, we signal any other pending activities
+    to stop right away
+    """
+    aka_log.log.debug(f"SIGTERM ({signum}) detected, setting stopEvent")
+    stopEvent.set()
+
+
+def control_break_handler():
+    """
+    Upon CTRL + C, we signal any other pending activities
+    to stop right away
+    """
+    aka_log.log.debug("Control+C detected, setting stopEvent")
+    stopEvent.set()
+
+
+def main():
+    signal.signal(signal.SIGTERM, sigterm_handler)
+
+    my_args = args.init()
 
 
 
-# Load the LOG system
-aka_log.init(my_args.loglevel, gc_version.__tool_name_short__)
+    # Load the LOG system
+    aka_log.init(my_args.loglevel, gc_version.__tool_name_short__)
 
-# Show Version
-if my_args.version:
-    generic.version()
+    # Show Version
+    if my_args.version:
+        generic.version()
 
 
-# Pre Flight checks
-edgerc_data = generic.edgerc_reader(configfile=my_args.credentials_file,
-                      configsection=my_args.credentials_file_section,
-                      configvalues=["gc_username","gc_password","gc_hostname"])
+    # Pre Flight checks
+    try:
+        if my_args.event_action:
+            edgerc_data = generic.edgerc_reader(configfile=my_args.credentials_file,
+                                  configsection=my_args.credentials_file_section,
+                                  configvalues=["gc_username","gc_password","gc_hostname"])
+    except:
+        print(f"Try akamai-gc --help")
+    try:
+        if my_args.event_action == "netlog":
+            gc_events.netlog(given_args=my_args, gc_edgerc=edgerc_data)
+        elif my_args.event_action == "incident":
+            gc_events.incident(given_args=my_args, gc_edgerc=edgerc_data)
+        elif my_args.event_action == "agent":
+            gc_events.agent(given_args=my_args, gc_edgerc=edgerc_data)
+        elif my_args.event_action == "system":
+            gc_events.system(given_args=my_args, gc_edgerc=edgerc_data)
+        else:
+            print("Nothing to do.")
+            sys.exit(1)
+    except:
+        sys.exit(1)
 
-try:
-    if my_args.event_action == "netlog":
-        gc_events.netlog(given_args=my_args, gc_edgerc=edgerc_data)
-    elif my_args.event_action == "incident":
-        gc_events.incident(given_args=my_args, gc_edgerc=edgerc_data)
-    elif my_args.event_action == "agent":
-        gc_events.agent(given_args=my_args, gc_edgerc=edgerc_data)
-    elif my_args.event_action == "system":
-        gc_events.system(given_args=my_args, gc_edgerc=edgerc_data)
-    else:
-        print("Nothing to do.")
-        sys.exit()
-except:
-    sys.exit()
+
+    if stopEvent.is_set():
+        sys.exit(100)
+
+
+if __name__ == "__main__":
+    main()
+
+# EOF
