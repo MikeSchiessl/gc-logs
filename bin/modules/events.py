@@ -36,7 +36,11 @@ def get_log(given_args=None, gc_edgerc=None, config_lopp_time=None, config_log_d
             my_params['offset'] = (my_page - 1) * config_page_size
             my_params['limit'] = config_page_size
 
-            my_result = generic.api_request(method="GET", scheme="https://", url=gc_edgerc['gc_hostname'], path=route, params=my_params, headers=my_headers, payload=None, user_agent=user_agent)
+            if given_args.skip_tls_validation:
+                aka_log.log.debug(f"Skipping TLS Validation - this is insecure")
+            else:
+                aka_log.log.debug(f"Using TLS Validation - well done !")
+            my_result = generic.api_request(method="GET", scheme="https://", url=gc_edgerc['gc_hostname'], path=route, params=my_params, headers=my_headers, payload=None, user_agent=user_agent, tls_verify=not given_args.skip_tls_validation)
 
             if my_result is not False:
                 for line in my_result['objects']:

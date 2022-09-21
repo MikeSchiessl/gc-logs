@@ -53,7 +53,7 @@ def edgerc_reader(configfile, configsection, configvalues):
 
 
 
-def api_request(method="GET", scheme="https://", url=None, path=None, params={}, payload={}, headers={}, content_type='application/json', expected_status_list=[200], user_agent=None):
+def api_request(method="GET", scheme="https://", url=None, path=None, params={}, payload={}, headers={}, content_type='application/json', expected_status_list=[200], user_agent=None, tls_verify=True):
     """
     Generic API Request handler including debugging handlers
     :param self:
@@ -66,6 +66,7 @@ def api_request(method="GET", scheme="https://", url=None, path=None, params={},
     :param headers:
     :param content_type:
     :param expected_status_list:
+    :param verify:
     :return:
     """
     try:
@@ -74,7 +75,7 @@ def api_request(method="GET", scheme="https://", url=None, path=None, params={},
         headers['User-Agent'] = user_agent
         aka_log.log.debug( f"Sending Request (URL: {my_url}, Method: {method}, Params: {params}, Payload: {payload}, Headers: {headers}, expected status: {expected_status_list} ")
         my_request = requests.request(method=method.upper(), url=my_url, params=params, headers=headers,
-                                      json=payload)
+                                      json=payload, verify=tls_verify)
         # my_request = urequests.request(method=method, url=my_url, headers=my_headers, json=payload)
         if my_request.status_code in expected_status_list and my_request.text:
             aka_log.log.debug(f"Request successful (status, text):  {my_request.status_code} {my_request.text}")

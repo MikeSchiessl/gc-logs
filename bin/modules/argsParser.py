@@ -53,6 +53,17 @@ def init():
                         help="Change the User Agent when making requests"
                         )
 
+    # USER AGENT
+    parser.add_argument('--skip-tls-validation',
+                        action='store',
+                        dest='skip_tls_validation',
+                        type=bool,
+                        nargs='?',
+                        const=True,
+                        default=(os.environ.get('GC_SKIP_TLS_VALIDATION') or False),
+                        help="Do not verify the API Servers TLS Certificate - very insecure !!!"
+                        )
+
     # Commands
     subparsers = parser.add_subparsers(help='sub-command help')
 
