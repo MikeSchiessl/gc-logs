@@ -40,6 +40,20 @@ gc_username = your_api_username
 gc_password = your_api_password
 ```
 
+# Advanced topics
+## Self signed certificates
+In order to work with self-signed certificates, you have 2 options:
+- You skip the TLS certificate (this is very insecure)
+  Either use the `--skip-tls-validation` flag on the command line or
+  set the following ENV variable on your system
+  ```bash
+  export GC_SKIP_TLS_VALIDATION=True
+  ```
+ 
+- You provide the root CA of your self signed certifcate to the python process 
+  ```bash
+  export REQUESTS_CA_BUNDLE=/path/to/your/certificate.pem
+  ```
 
 # 2DOS
-- add auto - auth renewal if failed
+- export "tags" and save to CSV
