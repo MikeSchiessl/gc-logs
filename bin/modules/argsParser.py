@@ -53,7 +53,7 @@ def init():
                         help="Change the User Agent when making requests"
                         )
 
-    # USER AGENT
+    # TLS VALIDATIONT
     parser.add_argument('--skip-tls-validation',
                         action='store',
                         dest='skip_tls_validation',
@@ -79,12 +79,14 @@ def init():
 
     parser_events.add_argument('--start',
                                action='store',
+                               type=int,
                                dest='event_starttime',
                                default=int(time.time()),
                                help="Fetch events from $starttime (UNIX TIMESTAMP)")
 
     parser_events.add_argument('--end',
                                action='store',
+                               type=int,
                                dest='event_endtime',
                                default=int(time.time()),
                                help=''"Stop event collection at $endtime (UNIX TIMESTAMP)")

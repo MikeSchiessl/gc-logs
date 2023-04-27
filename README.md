@@ -1,6 +1,8 @@
 # gc-logs
-Provide GC logs to ULS
+The tool was built to provide GC logs to ULS.
+It fetches Guardicore logs from the GC API.
 
+---
 ## Usage
 
 ### Network logs
@@ -39,7 +41,7 @@ gc_hostname = your_host_name.guardicore.com       # Do not prepend http(s)://
 gc_username = your_api_username
 gc_password = your_api_password
 ```
-
+---
 # Advanced topics
 ## Self signed certificates
 In order to work with self-signed certificates, you have 2 options:
@@ -55,5 +57,15 @@ In order to work with self-signed certificates, you have 2 options:
   export REQUESTS_CA_BUNDLE=/path/to/your/certificate.pem
   ```
 
+---
+   
 # 2DOS
 - export "tags" and save to CSV
+---
+# Changelog
+## v0.0.1(beta)
+  - Bugfix --start and --end time
+---
+# Support
+Solution is provided as-is, Akamai Support will only be able to help on the EAA Connector as Docker container.  
+For questions or issues with this solution, please raise a GitHub ticket.

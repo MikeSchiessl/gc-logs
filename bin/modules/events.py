@@ -8,8 +8,8 @@ import config.default_config as default_config
 import json
 
 def get_log(given_args=None, gc_edgerc=None, config_lopp_time=None, config_log_delay=None, config_page_size=500, route='/', params=None):
-    starttime = given_args.event_starttime - config_log_delay - config_lopp_time
-    endtime = given_args.event_endtime - config_log_delay
+    starttime = int(given_args.event_starttime) - config_log_delay - config_lopp_time
+    endtime = int(given_args.event_endtime) - config_log_delay
     follow_mode = given_args.event_follow
     user_agent = given_args.gc_user_agent_prefix
     gc_authtoken = None

@@ -56,6 +56,8 @@ def main():
                                   configvalues=["gc_username","gc_password","gc_hostname"])
     except:
         print(f"Try akamai-gc --help")
+
+    print(my_args)
     try:
         if my_args.event_action == "netlog":
             gc_events.netlog(given_args=my_args, gc_edgerc=edgerc_data)
@@ -68,13 +70,15 @@ def main():
         else:
             print("Nothing to do.")
             sys.exit(1)
-    except:
+    except Exception as e:
+        print(e)
         sys.exit(1)
 
 
     if stopEvent.is_set():
         sys.exit(100)
 
+    signal.signal(signal.SIGINT, sigterm_handler)
 
 if __name__ == "__main__":
     main()
