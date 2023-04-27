@@ -57,7 +57,6 @@ def main():
     except:
         print(f"Try akamai-gc --help")
 
-    print(my_args)
     try:
         if my_args.event_action == "netlog":
             gc_events.netlog(given_args=my_args, gc_edgerc=edgerc_data)
