@@ -3,6 +3,7 @@
 ## Based on https://guardicore.zendesk.com/hc/en-us/articles/360015818659-HOWTO-Network-Logs-API-Endpoint-Guide
 import sys
 import threading, signal
+import os
 
 import config.default_config as default_cfg
 import config.version as gc_version
@@ -51,9 +52,15 @@ def main():
     # Pre Flight checks
     try:
         if my_args.event_action:
-            edgerc_data = generic.edgerc_reader(configfile=my_args.credentials_file,
-                                  configsection=my_args.credentials_file_section,
-                                  configvalues=["gc_username","gc_password","gc_hostname"])
+            if not os.environ.get('GC_USERNAME') or not os.environ.get('GC_PASSWORD') or not os.environ.get('GC_HOSTNAME'):
+                edgerc_data = generic.edgerc_reader(configfile=my_args.credentials_file,
+                                      configsection=my_args.credentials_file_section,
+                                      configvalues=["gc_username","gc_password","gc_hostname"])
+            else:
+                edgerc_data = {}
+                edgerc_data['gc_username'] = os.environ.get('GC_USERNAME')
+                edgerc_data['gc_password'] = os.environ.get('GC_PASSWORD')
+                edgerc_data['gc_hostname'] = os.environ.get('GC_HOSTNAME')
     except:
         print(f"Try akamai-gc --help")
 

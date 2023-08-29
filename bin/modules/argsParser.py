@@ -12,7 +12,7 @@ def init():
                                      formatter_class=argparse.RawTextHelpFormatter)
 
     # Version Information
-    parser.add_argument('-v','--version',
+    parser.add_argument('-v', '--version',
                         action='store',
                         type=bool,
                         default=False,
