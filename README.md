@@ -43,6 +43,19 @@ gc_password = your_api_password
 ```
 ---
 # Advanced topics
+## Credentials via ENV VARS
+Either use environmental variables OR the .edgerc file
+
+| Variable                   | Default | Description                                                                                      |
+|----------------------------|---------|--------------------------------------------------------------------------------------------------|
+| CENTRA_MANAGEMENT_HOSTNAME                | none | Alternative to EDGERC - put the CENTRA management hostname here |
+| CENTRA_MANAGEMENT_PORT | none | Alternative to EDGERC - put the CENTRA management port here |
+| CENTRA_MANAGEMENT_USERNAME                | none | Alternative to EDGERC - put the CENTRA username here |
+| CENTRA_MANAGEMENT_PASSWORD                | none | Alternative to EDGERC - put the CENTRA password here |
+
+
+
+
 ## Self signed certificates
 In order to work with self-signed certificates, you have 2 options:
 - You skip the TLS certificate (this is very insecure)
@@ -63,6 +76,9 @@ In order to work with self-signed certificates, you have 2 options:
 - export "tags" and save to CSV
 ---
 # Changelog
+## v0.0.2(beta)
+ - Added ENV VAR support for edgerc data
+
 ## v0.0.1(beta)
   - Bugfix --start and --end time
 ---

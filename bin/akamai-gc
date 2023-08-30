@@ -51,16 +51,36 @@ def main():
 
     # Pre Flight checks
     try:
+        confivalues=[]
+        edgerc_data = {}
+
+
+        if os.environ.get("CENTRA_MANAGEMENT_HOSTNAME"):
+            edgerc_data["gc_hostname"] = os.environ.get("CENTRA_MANAGEMENT_HOSTNAME")
+        else:
+            confivalues.append("gc_hostname")
+
+        if os.environ.get("CENTRA_MANAGEMENT_PORT"):
+            edgerc_data["gc_port"] = os.environ.get("CENTRA_MANAGEMENT_PORT")
+        else:
+            edgerc_data["gc_port"] = 443
+
+        if os.environ.get("CENTRA_MANAGEMENT_USERNAME"):
+            edgerc_data["gc_username"] = os.environ.get("CENTRA_MANAGEMENT_USERNAME")
+        else:
+            confivalues.append("gc_username")
+
+        if os.environ.get("CENTRA_MANAGEMENT_PASSWORD"):
+            edgerc_data["gc_password"] = os.environ.get("CENTRA_MANAGEMENT_PASSWORD")
+        else:
+            confivalues.append("gc_password")
+
+
         if my_args.event_action:
-            if not os.environ.get('GC_USERNAME') or not os.environ.get('GC_PASSWORD') or not os.environ.get('GC_HOSTNAME'):
+            if confivalues:
                 edgerc_data = generic.edgerc_reader(configfile=my_args.credentials_file,
                                       configsection=my_args.credentials_file_section,
-                                      configvalues=["gc_username","gc_password","gc_hostname"])
-            else:
-                edgerc_data = {}
-                edgerc_data['gc_username'] = os.environ.get('GC_USERNAME')
-                edgerc_data['gc_password'] = os.environ.get('GC_PASSWORD')
-                edgerc_data['gc_hostname'] = os.environ.get('GC_HOSTNAME')
+                                      configvalues=confivalues)
     except:
         print(f"Try akamai-gc --help")
 
