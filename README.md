@@ -48,10 +48,10 @@ Either use environmental variables OR the .edgerc file
 
 | Variable                   | Default | Description                                                                                      |
 |----------------------------|---------|--------------------------------------------------------------------------------------------------|
-| CENTRA_MANAGEMENT_HOSTNAME                | none | Alternative to EDGERC - put the CENTRA management hostname here |
-| CENTRA_MANAGEMENT_PORT | none | Alternative to EDGERC - put the CENTRA management port here |
-| CENTRA_MANAGEMENT_USERNAME                | none | Alternative to EDGERC - put the CENTRA username here |
-| CENTRA_MANAGEMENT_PASSWORD                | none | Alternative to EDGERC - put the CENTRA password here |
+| CENTRA_MANAGEMENT_HOSTNAME                | none    | Alternative to EDGERC - put the CENTRA management hostname here |
+| CENTRA_MANAGEMENT_PORT | 443     | Alternative to EDGERC - put the CENTRA management port here |
+| CENTRA_MANAGEMENT_USERNAME                | none    | Alternative to EDGERC - put the CENTRA username here |
+| CENTRA_MANAGEMENT_PASSWORD                | none    | Alternative to EDGERC - put the CENTRA password here |
 
 
 
