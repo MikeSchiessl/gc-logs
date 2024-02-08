@@ -4,7 +4,7 @@ import time
 
 import modules.aka_log as aka_log
 import modules.generic as generic
-import config.default_config as default_config
+import gc_config.default_config as default_config
 import json
 
 def get_log(given_args=None, gc_edgerc=None, config_lopp_time=None, config_log_delay=None, config_page_size=500, route='/', params=None):

@@ -3,8 +3,8 @@
 import argparse
 import os
 import time
-import config.version as version
-import config.default_config as default_config
+import gc_config.version as version
+import gc_config.default_config as default_config
 
 def init():
     # Argument Parsing
