@@ -42,3 +42,8 @@ system_page_size= 10000
 system_log_delay = 600
 ### Loop time in seconds
 system_loop_time = 30
+
+## AUDIT config
+audit_page_size = 1000
+audit_log_delay = 600
+audit_loop_time = 30

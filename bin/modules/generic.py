@@ -27,6 +27,7 @@ def edgerc_reader(configfile, configsection, configvalues):
     my_return = {'gc_username': '', 'gc_password': '', 'gc_hostname': ''}
 
     config = configparser.ConfigParser()
+
     if not config.read(os.path.expanduser(configfile)):
         aka_log.log.critical(f"Config file '{os.path.expanduser(configfile)}' could not be loaded. - Exiting.")
         sys.exit(1)

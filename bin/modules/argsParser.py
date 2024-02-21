@@ -72,8 +72,7 @@ def init():
 
     ### NETLOG
     parser_events.add_argument(dest="event_action",
-                                choices=['netlog','incident','agent','system'],
-                               action='store',
+                               choices=['netlog', 'incident', 'agent', 'system', 'audit'],
                                help="Show Network Events")
 
 

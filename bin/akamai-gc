@@ -61,7 +61,7 @@ def main():
             confivalues.append("gc_hostname")
 
         if os.environ.get("CENTRA_MANAGEMENT_PORT"):
-            edgerc_data["gc_port"] = os.environ.get("CENTRA_MANAGEMENT_PORT")
+            edgerc_data["gc_port"] = int(os.environ.get("CENTRA_MANAGEMENT_PORT"))
         else:
             edgerc_data["gc_port"] = 443
 
@@ -81,6 +81,7 @@ def main():
                 edgerc_data = generic.edgerc_reader(configfile=my_args.credentials_file,
                                       configsection=my_args.credentials_file_section,
                                       configvalues=confivalues)
+
     except:
         print(f"Try akamai-gc --help")
 
@@ -93,6 +94,8 @@ def main():
             gc_events.agent(given_args=my_args, gc_edgerc=edgerc_data)
         elif my_args.event_action == "system":
             gc_events.system(given_args=my_args, gc_edgerc=edgerc_data)
+        elif my_args.event_action == "audit":
+            gc_events.audit(given_args=my_args, gc_edgerc=edgerc_data)
         else:
             print("Nothing to do.")
             sys.exit(1)

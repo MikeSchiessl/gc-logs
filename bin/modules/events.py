@@ -100,3 +100,13 @@ def system(given_args=None, gc_edgerc=None):
             config_page_size=default_config.incident_page_size,
             route='/api/v3.0/system-events',
             params={} )
+
+def audit(given_args=None, gc_edgerc=None):
+    get_log(given_args,
+            gc_edgerc,
+            config_log_delay=default_config.audit_log_delay,
+            config_lopp_time=default_config.audit_loop_time,
+            config_page_size=default_config.audit_page_size,
+            route='/api/v3.0/system/audit-log',
+            params={})
+

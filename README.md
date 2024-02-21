@@ -76,6 +76,11 @@ In order to work with self-signed certificates, you have 2 options:
 - export "tags" and save to CSV
 ---
 # Changelog
+## v0.0.4(beta)
+ - Added audit trail (thx for the nudge @Markus)
+## v0.0.3(beta)
+ - minor bugfixes
+
 ## v0.0.2(beta)
  - Added ENV VAR support for edgerc data
 
