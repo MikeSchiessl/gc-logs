@@ -83,8 +83,8 @@ In order to work with self-signed certificates, you have 2 options:
 ---
 # Changelog
 ## v0.0.5
- - Fixed a bug in the authentication handling which led to an issue with GC v50.4
-   Please update to this version before upgrading GC to v50.4
+ - Fixed a bug in the authentication handling which led to an issue with GC v50.4  
+   **Please update to this gc-logs version before upgrading your centra management to v50.4**
 
 ## v0.0.4(beta)
  - Added audit trail (thx for the nudge @Markus)
