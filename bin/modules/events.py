@@ -25,7 +25,7 @@ def get_log(given_args=None, gc_edgerc=None, config_lopp_time=None, config_log_d
                 aka_log.log.critical(f"Authentication failed - exiting.")
                 sys.exit(1)
             gc_authtoken = generic.gc_get_auth_token(gc_edgerc=gc_edgerc, tls_verify=not given_args.skip_tls_validation)['access_token']
-            my_headers = {'Authorization': f"bearer {gc_authtoken}"}
+            my_headers = {'Authorization': f"Bearer {gc_authtoken}"}
 
         # Walk pages
         walk_pages = True
