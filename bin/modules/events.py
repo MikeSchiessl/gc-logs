@@ -42,7 +42,7 @@ def get_log(given_args=None, gc_edgerc=None, config_lopp_time=None, config_log_d
                 aka_log.log.debug(f"Using TLS Validation - well done !")
             my_result = generic.api_request(method="GET", scheme="https://", url=gc_edgerc['gc_hostname'], path=route, params=my_params, headers=my_headers, payload=None, user_agent=user_agent, tls_verify=not given_args.skip_tls_validation)
 
-            if my_result is not False:
+            if my_result is not False and my_result is not None:
                 for line in my_result['objects']:
                     print(json.dumps(line))
 
