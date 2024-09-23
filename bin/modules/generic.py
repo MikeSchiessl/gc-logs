@@ -88,7 +88,7 @@ def api_request(method="GET", scheme="https://", url=None, path=None, params={},
         aka_log.log.critical(f"Critical request error: {error}")
 
 
-def gc_get_auth_token(gc_edgerc=None, tls_verify=True):
+def gc_get_auth_token(gc_edgerc=None, tls_verify=True, user_agent=None):
     """
     Returns the Guardicore auth token for later use
     :param gc_edgerc:
@@ -96,7 +96,7 @@ def gc_get_auth_token(gc_edgerc=None, tls_verify=True):
     """
     my_payload = {'username': gc_edgerc['gc_username'], 'password': gc_edgerc['gc_password']}
 
-    my_return = api_request(method="POST", url=gc_edgerc['gc_hostname'], path='/api/v3.0/authenticate', payload=my_payload, tls_verify=tls_verify)
+    my_return = api_request(method="POST", url=gc_edgerc['gc_hostname'], path='/api/v3.0/authenticate', payload=my_payload, tls_verify=tls_verify, user_agent=user_agent)
     if not my_return or not 'access_token' in my_return:
         aka_log.log.critical(f"Not able to retreive an authentication token, exiting")
         sys.exit(1)
