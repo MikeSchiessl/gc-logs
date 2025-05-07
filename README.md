@@ -82,6 +82,9 @@ In order to work with self-signed certificates, you have 2 options:
 - export "tags" and save to CSV
 ---
 # Changelog
+## v0.0.7
+ - Fixed a bug that prevented the tool from operating properly if there was a '%' character in the password
+
 ## v0.0.6
  - Fixed a bug that might happen when a user's password has expired (not leading to a proper error msg)
  - Added proper user-agent header to the auth request (was None before)

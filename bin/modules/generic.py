@@ -26,7 +26,7 @@ def edgerc_reader(configfile, configsection, configvalues):
     """
     my_return = {'gc_username': '', 'gc_password': '', 'gc_hostname': ''}
 
-    config = configparser.ConfigParser()
+    config = configparser.RawConfigParser()
 
     if not config.read(os.path.expanduser(configfile)):
         aka_log.log.critical(f"Config file '{os.path.expanduser(configfile)}' could not be loaded. - Exiting.")
@@ -47,8 +47,11 @@ def edgerc_reader(configfile, configsection, configvalues):
             aka_log.log.critical(f"Required configuration value '{configvalue}' not found in section  - Exiting")
             sys.exit(1)
         else:
-            my_return[configvalue] = config.get(section=configsection, option=configvalue)
-            aka_log.log.debug(f"Required configuration value '{configvalue}' found.")
+            try:
+                my_return[configvalue] = str(config.get(section=configsection, option=configvalue))
+            except Exception as e:
+                aka_log.log.error(f"Exception parsing the config value '{configvalue}'. Eexception: {e}")
+            aka_log.log.debug(f"Required configuration value '{configvalue}' - found.")
     return my_return
 
 
