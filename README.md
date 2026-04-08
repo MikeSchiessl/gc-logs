@@ -81,7 +81,12 @@ In order to work with self-signed certificates, you have 2 options:
 # 2DOS
 - export "tags" and save to CSV
 ---
+
 # Changelog
+
+## v0.0.8
+ - Fixed a problem that caused a new API token to be created on every cycle
+
 ## v0.0.7
  - Fixed a bug that prevented the tool from operating properly if there was a '%' character in the password
 
