@@ -26,6 +26,7 @@ def get_log(given_args=None, gc_edgerc=None, config_lopp_time=None, config_log_d
                 sys.exit(1)
             gc_authtoken = generic.gc_get_auth_token(gc_edgerc=gc_edgerc, tls_verify=not given_args.skip_tls_validation, user_agent=user_agent)['access_token']
             my_headers = {'Authorization': f"Bearer {gc_authtoken}"}
+            auth_attempt = 0
 
         # Walk pages
         walk_pages = True
@@ -42,7 +43,7 @@ def get_log(given_args=None, gc_edgerc=None, config_lopp_time=None, config_log_d
                 aka_log.log.debug(f"Using TLS Validation - well done !")
             my_result = generic.api_request(method="GET", scheme="https://", url=gc_edgerc['gc_hostname'], path=route, params=my_params, headers=my_headers, payload=None, user_agent=user_agent, tls_verify=not given_args.skip_tls_validation)
 
-            if my_result is not False and 'objects' in my_result:
+            if my_result and '_error' not in my_result and 'objects' in my_result:
                 for line in my_result['objects']:
                     print(json.dumps(line))
 
@@ -50,14 +51,19 @@ def get_log(given_args=None, gc_edgerc=None, config_lopp_time=None, config_log_d
                     walk_pages = False
                 my_page = my_page + 1
 
-            elif my_result is not False and 'objects' not in my_result:
+            elif my_result and '_error' not in my_result and 'objects' not in my_result:
                 aka_log.log.warning(f"We received a 200 message with an unexpected format !! - message: {my_result}")
+                walk_pages = False
 
-            else:
-                aka_log.log.debug(f"Unsetting 'auth token' - trying to auth.")
+            elif my_result and '_error' in my_result and my_result.get('_status_code') in [401, 403]:
+                aka_log.log.debug(f"Auth error (HTTP {my_result.get('_status_code')}) - unsetting 'auth token' - trying to re-auth.")
                 gc_authtoken = None
                 auth_attempt = auth_attempt + 1
                 break
+
+            else:
+                aka_log.log.warning(f"API request failed (non-auth error) - skipping this cycle. Details: {my_result}")
+                walk_pages = False
 
 
         if follow_mode:

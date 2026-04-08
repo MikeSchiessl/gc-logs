@@ -86,9 +86,10 @@ def api_request(method="GET", scheme="https://", url=None, path=None, params={},
             return my_request.json()
         else:
             aka_log.log.critical(f"Request error (status, text):  {my_request.status_code} {my_request.text}")
-            return False
+            return {'_error': True, '_status_code': my_request.status_code}
     except Exception as error:
         aka_log.log.critical(f"Critical request error: {error}")
+        return {'_error': True, '_status_code': 0}
 
 
 def gc_get_auth_token(gc_edgerc=None, tls_verify=True, user_agent=None):
